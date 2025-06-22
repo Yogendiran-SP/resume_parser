@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Filtered Candidates</title></head>
+    <body>
+        <h2>Resumes matching your skill criteria</h2>
+
+        <p><strong>Your expected skills:</strong>  {{input_skills | join(', ')}}  </p>
+        <hr>
+        {% if resumes %}
+            {% for resume in resumes %}
+            <div style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;">
+                <p><strong>Name:</strong> {{ resume['name'] }}</p>
+                <p><strong>Email:</strong> {{ resume['email'] }}</p>
+                <p><strong>Phone Number:</strong> {{ resume['phone'] }}</p>
+                <p><strong>Candidate skills:</strong> {{ resume['skills'] | join(', ') }}</p>
+                <p><strong>Education:</strong> {{ resume['education'] }}</p>
+                <p><strong>Experience:</strong> {{ resume['experience'] | join(', ') }}</p>
+                <p><strong>Projects:</strong> {{ resume['projects'] | join(', ') }}</p>
+                <p><strong>Missing skills:</strong> {{ resume['missing skills'] | join(', ') }}</p>
+                <p><strong>Matched skills:</strong> {{ resume['matched skills'] | join(', ') }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No Resumes matched your expected skills.</p>
+        {% endif %}
+
+        <br>
+        <a href="/">← Upload more</a>
+
+    </body>
+</html>

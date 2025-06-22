@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Upload Resumes</title>
+    </head>
+    <body>
+        <h2>Upload Muliple Resumes (.pdf)</h2>
+
+        <form method="post" action="/upload" enctype="multipart/form-data">
+            <label>Enter Expected Skills :</label><br>
+            <input type="text" name="expected_skills" placeholder="e.g. Python, Django, SQL" required><br><br>
+            <input type="file" name="resumes[]" multiple required><br><br>
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>
