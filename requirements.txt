@@ -1,4 +1,4 @@
 flask
-spacy
-python-docx
-PyMuPDF
+requests
+werkzeug
+fpdf
