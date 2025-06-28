@@ -1,6 +1,5 @@
 import os
 from .parser import parse_resume
-from .db_handler import insert_resume
 from .extracter import extract_text
 
 def process_single_resume(file_path, expected_skills):
@@ -13,7 +12,6 @@ def process_single_resume(file_path, expected_skills):
         print(f"{key.capitalize()}: {value}")
 
     if len(parsed_data["matched skills"]) >= 2:
-        print(insert_resume(parsed_data))
         for item in parsed_data.items():
             stored_resume.append(item)
     else:

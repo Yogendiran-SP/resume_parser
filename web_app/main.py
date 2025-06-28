@@ -5,6 +5,11 @@ from werkzeug.utils import secure_filename
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app.run import process_all_resume,clear_upload_folder
 
+import requests
+import json
+
+FIREBASE_DB_URL = "https://ai-resume-parser-01-default-rtdb.asia-southeast1.firebasedatabase.app/resumes.json"
+
 upload_folder = './uploads'
 
 app = Flask(__name__)
@@ -37,6 +42,14 @@ def upload_resume():
     print("🥇 stored_resumes:",stored_resumes)
     converted_resumes = [dict(resume) for resume in stored_resumes]
     print("🥈 converted_resumes:",converted_resumes)
+    # Push each resume to Firebase
+    for resume in converted_resumes:
+        try:
+            response = requests.post(FIREBASE_DB_URL, json=resume)
+            print("✅ Uploaded to Firebase:", response.status_code)
+        except Exception as e:
+            print("❌ Failed to upload:", e)
+
     # clear_upload_folder(folder_path)
 
     return render_template('result.html',resumes=converted_resumes,input_skills=expected_skills)
