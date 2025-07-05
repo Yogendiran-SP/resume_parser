@@ -1,14 +1,23 @@
 import os
 import sys
+from dotenv import load_dotenv
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
+import firebase_admin
+from firebase_admin import credentials
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app.run import process_all_resume,clear_upload_folder
 
 import requests
 import json
 
-FIREBASE_DB_URL = "https://ai-resume-parser-01-default-rtdb.asia-southeast1.firebasedatabase.app/resumes.json"
+load_dotenv()
+firebase_cred_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+cred = credentials.Certificate(firebase_cred_path)
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'FIREBASE_DB_URL'
+})
 
 upload_folder = './uploads'
 
