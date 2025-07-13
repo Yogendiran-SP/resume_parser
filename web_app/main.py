@@ -14,7 +14,6 @@ import json
 
 load_dotenv()
 firebase_cred_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
-print("🔑 firebase_cred_path:",firebase_cred_path)
 cred = credentials.Certificate(firebase_cred_path)
 firebase_admin.initialize_app(cred, {
     'databaseURL': os.getenv('FIREBASE_DB_URL')
