@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 import firebase_admin
-from firebase_admin import credentials
+from firebase_admin import credentials,db
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app.run import process_all_resume,clear_upload_folder
@@ -14,9 +14,10 @@ import json
 
 load_dotenv()
 firebase_cred_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+print("🔑 firebase_cred_path:",firebase_cred_path)
 cred = credentials.Certificate(firebase_cred_path)
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'FIREBASE_DB_URL'
+    'databaseURL': os.getenv('FIREBASE_DB_URL')
 })
 
 upload_folder = './uploads'
@@ -54,7 +55,7 @@ def upload_resume():
     # Push each resume to Firebase
     for resume in converted_resumes:
         try:
-            response = requests.post(FIREBASE_DB_URL, json=resume)
+            response = db.reference('resumes').push(resume)
             print("✅ Uploaded to Firebase:", response.status_code)
         except Exception as e:
             print("❌ Failed to upload:", e)
